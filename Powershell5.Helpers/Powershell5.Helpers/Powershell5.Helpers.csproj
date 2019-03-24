@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdletExtentions\InvokeCmdletExtensions.cs" />
+    <Compile Include="CmdletExtentions\PowerShellRunTimeVariablesExtensions.cs" />
     <Compile Include="Models\CmdletParameterSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
