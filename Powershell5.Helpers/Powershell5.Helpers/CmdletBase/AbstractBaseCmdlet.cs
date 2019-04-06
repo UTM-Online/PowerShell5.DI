@@ -67,5 +67,20 @@
         {
             this.StopCmdletProcessing();
         }
+
+        [AttributeUsage(AttributeTargets.Field | AttributeTargets.GenericParameter | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+        protected sealed class ShouldInjectAttribute : Attribute
+        {
+            public string Name { get; set; }
+
+            public ShouldInjectAttribute()
+            {
+            }
+
+            public ShouldInjectAttribute(string name)
+            {
+                this.Name = name;
+            }
+        }
     }
 }
