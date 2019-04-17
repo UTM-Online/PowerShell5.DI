@@ -11,7 +11,7 @@
         {
         }
 
-        protected virtual void ProcessCmdlet()
+        protected virtual void ProcessCmdletRecord()
         {
         }
 
@@ -55,7 +55,7 @@
 
         protected sealed override void ProcessRecord()
         {
-            this.ProcessCmdlet();
+            this.ProcessCmdletRecord();
         }
 
         protected sealed override void EndProcessing()
