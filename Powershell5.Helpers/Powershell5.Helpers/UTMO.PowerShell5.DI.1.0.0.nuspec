@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>UTMO.PowerShell5.DI</id>
+    <version>1.0.0</version>
+    <title>UTMO.PowerShell5.DI</title>
+    <authors>joshuaitguy</authors>
+    <owners>joshua@irwin.ws</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://dev.azure.com/utmo-public/PowerShellModules/_dashboards/dashboard/6379813e-ebd2-4c81-a3c1-63426adc1f07</projectUrl>
+    <description>My package description.</description>
+    <summary>Adds Dependency Injection (DI) capabilities to PowerShell Cmlets.</summary>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7.1">
+        <dependency id="Microsoft.PowerShell.5.ReferenceAssemblies" version="1.1.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="lib\net471\Powershell5.Helpers.dll" target="lib\net471\Powershell5.Helpers.dll" />
+  </files>
+</package>
