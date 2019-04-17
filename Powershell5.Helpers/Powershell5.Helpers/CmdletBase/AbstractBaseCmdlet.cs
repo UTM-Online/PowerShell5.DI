@@ -25,26 +25,22 @@
 
         protected sealed override void BeginProcessing()
         {
-            var injectableProperties = this.GetType().GetProperties(BindingFlags.NonPublic).Where(
-                p => p.CustomAttributes.Any(a => a.AttributeType == typeof(ShouldInjectAttribute)));
-
-            if (injectableProperties.Any())
+            if (this.GetType()
+                    .GetProperties(BindingFlags.NonPublic)
+                    .Where(
+                           p => p.CustomAttributes.Any(a => a.AttributeType == typeof(ShouldInjectAttribute))
+                           ) is List<PropertyInfo> injectableProperties
+                    && injectableProperties.Any())
             {
                 foreach (var property in injectableProperties)
                 {
+                    // ReSharper disable once SuggestVarOrType_BuiltInTypes
                     string resolverName = property.GetCustomAttribute<ShouldInjectAttribute>().Name;
-                    Type targetType = property.PropertyType;
+                    var targetType = property.PropertyType;
 
                     object instance = null;
 
-                    if (string.IsNullOrWhiteSpace(resolverName))
-                    {
-                        instance = InternalContainer.Container.Value.Resolve(targetType);
-                    }
-                    else
-                    {
-                        instance = InternalContainer.Container.Value.Resolve(targetType, resolverName);
-                    }
+                    instance = string.IsNullOrWhiteSpace(resolverName) ? InternalContainer.Container.Value.Resolve(targetType) : InternalContainer.Container.Value.Resolve(targetType, resolverName);
 
                     property.SetValue(property, instance);
                 }
