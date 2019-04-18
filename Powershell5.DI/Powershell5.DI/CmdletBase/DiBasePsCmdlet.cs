@@ -1,61 +1,63 @@
 ﻿// ***********************************************************************
-// Assembly         : Powershell5.Helpers
+// Assembly         : UTMO.Powershell5.DI
 // Author           : joirwi
-// Created          : 04-17-2019
+// Created          : 04-18-2019
 //
 // Last Modified By : joirwi
-// Last Modified On : 04-17-2019
+// Last Modified On : 04-18-2019
 // ***********************************************************************
-// <copyright file="AbstractBaseCmdlet.cs" company="">
+// <copyright file="DiBasePsCmdlet.cs" company="UTM-Online">
 //     Copyright ©  2019
 // </copyright>
-// <summary></summary>
+// <summary>The base class for use with cmdlets that want Dependance Injection and want to derive them selves from the PSCmdlet Base Class</summary>
 // ***********************************************************************
-namespace Powershell5.Helpers.CmdletBase
+namespace UTMO.Powershell5.DI.CmdletBase
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Management.Automation;
     using System.Reflection;
+    using DI;
 
     /// <summary>
-    /// Class AbstractBaseCmdlet.
-    /// Implements the <see cref="System.Management.Automation.Cmdlet" />
+    /// Class DiBasePsCmdlet.
+    /// Implements the <see cref="System.Management.Automation.PSCmdlet" />
     /// </summary>
-    /// <seealso cref="System.Management.Automation.Cmdlet" />
-    public abstract class AbstractBaseCmdlet : Cmdlet
+    /// <seealso cref="System.Management.Automation.PSCmdlet" />
+    public class DiBasePsCmdlet : PSCmdlet
     {
         /// <summary>
-        /// Begins the cmdlet processing.
+        /// This method replaces the call you would make to the "BeginProcessing" method on the <see cref="PSCmdlet"/> class.
         /// </summary>
         protected virtual void BeginCmdletProcessing()
         {
         }
 
         /// <summary>
-        /// Processes the cmdlet record.
+        /// This method replaces the call you would make to the "ProcessRecord" method on the <see cref="PSCmdlet"/> class.
         /// </summary>
         protected virtual void ProcessCmdletRecord()
         {
         }
 
         /// <summary>
-        /// Ends the cmdlet processing.
+        /// This method replaces the call you would make to the "EndProcessing" method on the <see cref="PSCmdlet"/> class.
         /// </summary>
         protected virtual void EndCmdletProcessing()
         {
         }
 
         /// <summary>
-        /// Stops the cmdlet processing.
+        /// This method replaces the call you would make to the "StopProcessing" method on the <see cref="PSCmdlet"/> class.
         /// </summary>
         protected virtual void StopCmdletProcessing()
         {
         }
 
         /// <summary>
-        /// Begins the processing.
+        /// Overrides the BeginProcessing method from the base class.  In this method we perform the act of injection dependencies in to properties and fields
+        /// decorated with the <see cref="ShouldInjectAttribute"/>.
         /// </summary>
         protected sealed override void BeginProcessing()
         {
@@ -72,9 +74,7 @@ namespace Powershell5.Helpers.CmdletBase
                     string resolverName = property.GetCustomAttribute<ShouldInjectAttribute>().Name;
                     var targetType = property.PropertyType;
 
-                    object instance = null;
-
-                    instance = string.IsNullOrWhiteSpace(resolverName) ? InternalContainer.Container.Value.Resolve(targetType) : InternalContainer.Container.Value.Resolve(targetType, resolverName);
+                    var instance = string.IsNullOrWhiteSpace(resolverName) ? InternalContainer.Container.Value.Resolve(targetType) : InternalContainer.Container.Value.Resolve(targetType, resolverName);
 
                     property.SetValue(property, instance);
                 }
@@ -84,7 +84,8 @@ namespace Powershell5.Helpers.CmdletBase
         }
 
         /// <summary>
-        /// Processes the record.
+        /// Overrides the base class implementation.  Well I have no plans to add logic here it's been overriden to provide a uniform naming convention for class
+        /// methods
         /// </summary>
         protected sealed override void ProcessRecord()
         {
@@ -92,7 +93,8 @@ namespace Powershell5.Helpers.CmdletBase
         }
 
         /// <summary>
-        /// Ends the processing.
+        /// Overrides the base class implementation.  Well I have no plans to add logic here it's been overriden to provide a uniform naming convention for class
+        /// methods
         /// </summary>
         protected sealed override void EndProcessing()
         {
@@ -100,7 +102,8 @@ namespace Powershell5.Helpers.CmdletBase
         }
 
         /// <summary>
-        /// Stops the processing.
+        /// Overrides the base class implementation.  Well I have no plans to add logic here it's been overriden to provide a uniform naming convention for class
+        /// methods
         /// </summary>
         protected override void StopProcessing()
         {
@@ -108,7 +111,8 @@ namespace Powershell5.Helpers.CmdletBase
         }
 
         /// <summary>
-        /// Class ShouldInjectAttribute. This class cannot be inherited.
+        /// This class is used to decorate properties and fields that require dependency injection.
+        /// This class cannot be inherited.
         /// Implements the <see cref="System.Attribute" />
         /// </summary>
         /// <seealso cref="System.Attribute" />
@@ -118,18 +122,19 @@ namespace Powershell5.Helpers.CmdletBase
             /// <summary>
             /// Gets or sets the name.
             /// </summary>
-            /// <value>The name.</value>
+            /// <value>The name specified for a registered type with the DI container that you want retrieved.</value>
+            /// <remarks>This is useful only when you are using named dependencies in your container.</remarks>
             public string Name { get; set; }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ShouldInjectAttribute"/> class.
+            /// Initializes a new instance of the <see cref="ShouldInjectAttribute" /> class.
             /// </summary>
             public ShouldInjectAttribute()
             {
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ShouldInjectAttribute"/> class.
+            /// Initializes a new instance of the <see cref="ShouldInjectAttribute" /> class.
             /// </summary>
             /// <param name="name">The name.</param>
             public ShouldInjectAttribute(string name)
