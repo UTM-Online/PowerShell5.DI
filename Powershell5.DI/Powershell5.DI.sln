@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Powershell5.Helpers", "Powershell5.Helpers\Powershell5.Helpers.csproj", "{A953C2D7-6A18-4079-9214-9FC89F3D1862}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Powershell5.DI", "Powershell5.DI\Powershell5.DI.csproj", "{A953C2D7-6A18-4079-9214-9FC89F3D1862}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,6 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\$configuration$\Powershell5.Helpers.dll" target="lib\net471\Powershell5.Helpers.dll" />
+    <file src="bin\$configuration$\UTMO.Powershell5.DI.dll" target="lib\net471\UTMO.Powershell5.DI.dll" />
   </files>
 </package>
