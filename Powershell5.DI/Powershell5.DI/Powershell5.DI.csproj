@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmdletBase\AbstractBaseCmdlet.cs" />
+    <Compile Include="CmdletBase\DiBaseCmdlet.cs" />
     <Compile Include="DI\InternalContainer.cs" />
     <Compile Include="DI\IPowerShellDiContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
