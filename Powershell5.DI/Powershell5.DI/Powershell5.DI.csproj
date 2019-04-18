@@ -45,11 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmdletBase\AbstractBaseCmdlet.cs" />
-    <Compile Include="CmdletExtentions\InvokeCmdletExtensions.cs" />
-    <Compile Include="CmdletExtentions\PowerShellRunTimeVariablesExtensions.cs" />
     <Compile Include="DI\InternalContainer.cs" />
     <Compile Include="DI\IPowerShellDiContainer.cs" />
-    <Compile Include="Models\CmdletParameterSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
