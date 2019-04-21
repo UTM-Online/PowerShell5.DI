@@ -9,9 +9,9 @@
         void Register<T>(string name)
             where T : class;
 
-        void Register<TInterface, TImplementation>() where TImplementation : class;
+        void Register<TInterface, TImplementation>() where TImplementation : TInterface;
 
-        void Register<TInterface, TImplementation>(string name) where TImplementation : class;
+        void Register<TInterface, TImplementation>(string name) where TImplementation : TInterface;
 
         void Register<T>(Func<T> factoryMethod);
 
