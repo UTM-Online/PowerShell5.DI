@@ -39,7 +39,7 @@ namespace UTMO.Powershell5.DI.DI
         /// </summary>
         /// <typeparam name="TInterface">The type of the t interface.</typeparam>
         /// <typeparam name="TImplementation">The type of the t implementation.</typeparam>
-        void Register<TInterface, TImplementation>() where TImplementation : TInterface;
+        void Register<TInterface, TImplementation>() where TImplementation : class, TInterface;
 
         /// <summary>
         /// Registers the specified name.
@@ -47,14 +47,14 @@ namespace UTMO.Powershell5.DI.DI
         /// <typeparam name="TInterface">The type of the t interface.</typeparam>
         /// <typeparam name="TImplementation">The type of the t implementation.</typeparam>
         /// <param name="name">The name.</param>
-        void Register<TInterface, TImplementation>(string name) where TImplementation : TInterface;
+        void Register<TInterface, TImplementation>(string name) where TImplementation : class, TInterface;
 
-        /// <summary>
-        /// Registers the specified factory method.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <summary>Registers the specified factory method.</summary>
+        /// <typeparam name="TInterface">The Interface Being Registered</typeparam>
+        /// <typeparam name="TImplementation">The class being mapped to the interface</typeparam>
         /// <param name="factoryMethod">The factory method.</param>
-        void Register<T>(Func<T> factoryMethod);
+        void RegisterFactory<TInterface, TImplementation>(Func<TInterface, TImplementation> factoryMethod)
+            where TImplementation : class, TInterface;
 
         /// <summary>
         /// Registers the specified abstraction.
@@ -83,14 +83,14 @@ namespace UTMO.Powershell5.DI.DI
         /// <typeparam name="TInterface">The type of the t interface.</typeparam>
         /// <typeparam name="TImplementation">The type of the t implementation.</typeparam>
         void RegisterSingleton<TInterface, TImplementation>()
-            where TImplementation : class;
+            where TImplementation : class, TInterface;
 
-        /// <summary>
-        /// Registers the singleton.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <summary>Registers the singleton.</summary>
+        /// <typeparam name="TInterface">The Interface Being Registered</typeparam>
+        /// <typeparam name="TImplementation">The Objecting being mapped to the interface</typeparam>
         /// <param name="factoryMethod">The factory method.</param>
-        void RegisterSingleton<T>(Func<T> factoryMethod);
+        void RegisterSingleton<TInterface, TImplementation>(Func<TInterface, TImplementation> factoryMethod)
+            where TImplementation : class, TInterface;
 
         /// <summary>
         /// Registers the singleton.
@@ -99,7 +99,7 @@ namespace UTMO.Powershell5.DI.DI
         /// <typeparam name="TImplementation">The type of the t implementation.</typeparam>
         /// <param name="name">The name.</param>
         void RegisterSingleton<TInterface, TImplementation>(string name)
-            where TImplementation : class;
+            where TImplementation : class, TInterface;
 
         /// <summary>
         /// Registers the singleton.
