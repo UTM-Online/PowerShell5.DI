@@ -19,6 +19,9 @@ namespace UTMO.Powershell5.DI.DI
 {
     using System;
     using System.Linq;
+    using System.Reflection;
+
+    using UTMO.Powershell5.DI.Exceptions;
 
     /// <summary>
     /// Class InternalContainer.
@@ -45,15 +48,38 @@ namespace UTMO.Powershell5.DI.DI
         /// <returns>IPowerShellDiContainer.</returns>
         private static IPowerShellDiContainer LoadContainer()
         {
+            // TODO: this whole method needs to be refactored to align the variable names with their intended usage
             var type = typeof(IPowerShellDiContainer);
 
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
             var knownTypes = loadedAssemblies.SelectMany(a => a.GetTypes());
 
-            var containerType = knownTypes.First(a => type.IsAssignableFrom(a));
+            var containerType = knownTypes.Where(a => type.IsAssignableFrom(a));
 
-            return (IPowerShellDiContainer)Activator.CreateInstance(containerType);
+            Type targetContainer = null;
+
+            if (containerType.Count() > 1)
+            {
+                var containerAttribute = typeof(PowerShellDiContainerAttribute);
+
+                var containersWithAttributeApplied = containerType.Where(c => c.GetCustomAttribute(containerAttribute) != null);
+
+                if (containersWithAttributeApplied.Count() == 1)
+                {
+                    targetContainer = containersWithAttributeApplied.First();
+                }
+                else
+                {
+                    throw new TooManyContainersException(containersWithAttributeApplied);
+                }
+            }
+            else if (containerType.Count() == 1)
+            {
+                targetContainer = containerType.First();
+            }
+
+            return (IPowerShellDiContainer)Activator.CreateInstance(targetContainer);
         }
     }
 }
