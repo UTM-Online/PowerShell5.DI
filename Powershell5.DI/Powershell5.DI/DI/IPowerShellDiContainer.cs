@@ -72,20 +72,20 @@ namespace UTMO.Powershell5.DI.DI
         void Register(Type abstraction, Type implementation, string name);
 
         /// <summary>
-        /// Registers the singleton.
+        /// Registers a singleton.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the singleton being registered</typeparam>
         void RegisterSingleton<T>();
 
         /// <summary>
-        /// Registers the singleton.
+        /// Registers a singleton.
         /// </summary>
         /// <typeparam name="TInterface">The type of the t interface.</typeparam>
         /// <typeparam name="TImplementation">The type of the t implementation.</typeparam>
         void RegisterSingleton<TInterface, TImplementation>()
             where TImplementation : class, TInterface;
 
-        /// <summary>Registers the singleton.</summary>
+        /// <summary>Registers a singleton.</summary>
         /// <typeparam name="TInterface">The Interface Being Registered</typeparam>
         /// <typeparam name="TImplementation">The Objecting being mapped to the interface</typeparam>
         /// <param name="factoryMethod">The factory method.</param>
@@ -120,7 +120,7 @@ namespace UTMO.Powershell5.DI.DI
         /// Resolves the specified type.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <returns>System.Object.</returns>
+        /// <returns>The registered type boxed in an <see cref="object"/>.</returns>
         object Resolve(Type type);
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace UTMO.Powershell5.DI.DI
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="name">The name.</param>
-        /// <returns>System.Object.</returns>
+        /// <returns>The registered type with the specified name boxed in an <see cref="object"/>.</returns>
         object Resolve(Type type, string name);
     }
 }

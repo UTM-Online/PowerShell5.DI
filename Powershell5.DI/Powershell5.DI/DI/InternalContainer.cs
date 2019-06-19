@@ -19,6 +19,9 @@ namespace UTMO.Powershell5.DI.DI
 {
     using System;
     using System.Linq;
+    using System.Reflection;
+
+    using UTMO.Powershell5.DI.Exceptions;
 
     /// <summary>
     /// Class InternalContainer.
@@ -42,18 +45,46 @@ namespace UTMO.Powershell5.DI.DI
         /// <summary>
         /// Loads the container.
         /// </summary>
-        /// <returns>IPowerShellDiContainer.</returns>
+        /// <returns>The type implementing <see cref="IPowerShellDiContainer"/>.</returns>
         private static IPowerShellDiContainer LoadContainer()
         {
-            var type = typeof(IPowerShellDiContainer);
+            var containerInterface = typeof(IPowerShellDiContainer);
 
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            var knownTypes = loadedAssemblies.SelectMany(a => a.GetTypes());
+            var discoveredTypes = loadedAssemblies.SelectMany(a => a.GetTypes());
 
-            var containerType = knownTypes.First(a => type.IsAssignableFrom(a));
+            var discoveredContainers = discoveredTypes.Where(a => containerInterface.IsAssignableFrom(a)).ToList();
 
-            return (IPowerShellDiContainer)Activator.CreateInstance(containerType);
+            //// TODO: Add a guard clause here that will fail fast if no containers are discovered
+
+            Type targetContainer;
+
+            if (discoveredContainers.Count() > 1)
+            {
+                var containerAttribute = typeof(PowerShellDiContainerAttribute);
+
+                var containersWithAttributeApplied = discoveredContainers.Where(c => c.GetCustomAttribute(containerAttribute) != null).ToList();
+
+                if (containersWithAttributeApplied.Count() == 1)
+                {
+                    targetContainer = containersWithAttributeApplied.First();
+                }
+                else
+                {
+                    throw new TooManyContainersException(containersWithAttributeApplied);
+                }
+            }
+            else if (discoveredContainers.Count() == 1)
+            {
+                targetContainer = discoveredContainers.First();
+            }
+            else
+            {
+                throw new ContainerNotFoundException();
+            }
+
+            return (IPowerShellDiContainer)Activator.CreateInstance(targetContainer);
         }
     }
 }
