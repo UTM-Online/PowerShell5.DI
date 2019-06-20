@@ -43,21 +43,7 @@ namespace UTMO.Powershell5.DI.CmdletBase
         /// </summary>
         protected override sealed void BeginProcessing()
         {
-            if (this.GetType().GetProperties(BindingFlags.NonPublic).Where(
-                        p => p.CustomAttributes.Any(a => a.AttributeType == typeof(ShouldInjectAttribute))) is
-                    List<PropertyInfo> injectableProperties && injectableProperties.Any())
-                foreach (var property in injectableProperties)
-                {
-                    // ReSharper disable once SuggestVarOrType_BuiltInTypes
-                    string resolverName = property.GetCustomAttribute<ShouldInjectAttribute>().Name;
-                    var targetType = property.PropertyType;
-
-                    var instance = string.IsNullOrWhiteSpace(resolverName)
-                                       ? InternalContainer.Container.Value.Resolve(targetType)
-                                       : InternalContainer.Container.Value.Resolve(targetType, resolverName);
-
-                    property.SetValue(property, instance);
-                }
+            this.PerformFieldInjection<ShouldInjectAttribute>();
 
             this.BeginCmdletProcessing();
         }
@@ -120,7 +106,7 @@ namespace UTMO.Powershell5.DI.CmdletBase
         /// </summary>
         /// <seealso cref="System.Attribute" />
         [AttributeUsage(AttributeTargets.Field | AttributeTargets.GenericParameter | AttributeTargets.Property)]
-        protected sealed class ShouldInjectAttribute : Attribute
+        protected sealed class ShouldInjectAttribute : Attribute, IShouldInject
         {
             /// <summary>
             ///     Initializes a new instance of the <see cref="ShouldInjectAttribute" /> class.
