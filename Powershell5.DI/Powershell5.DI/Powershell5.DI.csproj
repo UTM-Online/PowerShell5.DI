@@ -44,10 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdletBase\Common.cs" />
     <Compile Include="CmdletBase\DiBaseCmdlet.cs" />
     <Compile Include="CmdletBase\DiBasePsCmdlet.cs" />
     <Compile Include="DI\InternalContainer.cs" />
     <Compile Include="DI\IPowerShellDiContainer.cs" />
+    <Compile Include="DI\IShouldInject.cs" />
     <Compile Include="DI\PowerShellDiContainerAttribute.cs" />
     <Compile Include="Exceptions\ContainerNotFoundException.cs" />
     <Compile Include="Exceptions\TooManyContainersException.cs" />
