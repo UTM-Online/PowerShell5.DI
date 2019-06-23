@@ -54,7 +54,7 @@ namespace UTMO.Powershell5.DI.DI
 
             var discoveredTypes = loadedAssemblies.SelectMany(a => a.GetTypes());
 
-            var discoveredContainers = discoveredTypes.Where(a => containerInterface.IsAssignableFrom(a)).ToList();
+            var discoveredContainers = discoveredTypes.Where(a => a.Namespace != null && (a.IsClass && !a.Namespace.StartsWith("UTMO.PowerShell5.DI.Unity") && containerInterface.IsAssignableFrom(a))).ToList();
 
             //// TODO: Add a guard clause here that will fail fast if no containers are discovered
 
