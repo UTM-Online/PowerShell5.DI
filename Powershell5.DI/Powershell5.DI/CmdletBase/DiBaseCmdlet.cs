@@ -29,6 +29,11 @@ namespace UTMO.Powershell5.DI.CmdletBase
     /// <seealso cref="System.Management.Automation.Cmdlet" />
     public abstract class DiBaseCmdlet : Cmdlet
     {
+        public DiBaseCmdlet()
+        {
+            this.PerformFieldInjection<ShouldInjectAttribute>();
+        }
+
         /// <summary>
         ///     This method replaces the call you would make to the "BeginProcessing" method on the <see cref="PSCmdlet" /> class.
         /// </summary>
