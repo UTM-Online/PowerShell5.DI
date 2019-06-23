@@ -4,7 +4,6 @@
 
     using UTMO.Powershell5.DI.DI;
 
-    [PowerShellDiContainer]
     public class TestContainer : IPowerShellDiContainer
     {
         public void Register<T>()
