@@ -50,11 +50,17 @@ namespace UTMO.Powershell5.DI.DI
         {
             var containerInterface = typeof(IPowerShellDiContainer);
 
-            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(
+                assembly =>
+                    {
+                        var assemblyName = assembly.GetName().Name;
 
-            var discoveredTypes = loadedAssemblies.SelectMany(a => a.GetTypes());
+                        return assemblyName != "UTMO.PowerShell5.DI.Unity" && assemblyName != "UTMO.Powershell5.DI";
+                    });
 
-            var discoveredContainers = discoveredTypes.Where(a => a.Namespace != null && (a.IsClass && !a.Namespace.StartsWith("UTMO.PowerShell5.DI.Unity") && containerInterface.IsAssignableFrom(a))).ToList();
+            var discoveredTypes = loadedAssemblies.SelectMany(a => a.GetTypes().Where(t => t.IsClass && containerInterface.IsAssignableFrom(t)));
+
+            var discoveredContainers = discoveredTypes.ToList();
 
             //// TODO: Add a guard clause here that will fail fast if no containers are discovered
 
