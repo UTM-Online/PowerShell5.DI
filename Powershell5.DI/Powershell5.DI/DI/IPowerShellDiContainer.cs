@@ -138,5 +138,10 @@ namespace UTMO.Powershell5.DI.DI
         /// <param name="name">The name.</param>
         /// <returns>The registered type with the specified name boxed in an <see cref="object"/>.</returns>
         object Resolve(Type type, string name);
+
+        /// <summary>Resolves the specified type</summary>
+        /// <typeparam name="T">The type being returned from the container</typeparam>
+        /// <returns>  An instance of the requested type</returns>
+        T Resolve<T>();
     }
 }
