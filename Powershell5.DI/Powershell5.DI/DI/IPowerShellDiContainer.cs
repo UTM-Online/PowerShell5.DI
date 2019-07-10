@@ -143,5 +143,11 @@ namespace UTMO.Powershell5.DI.DI
         /// <typeparam name="T">The type being returned from the container</typeparam>
         /// <returns>  An instance of the requested type</returns>
         T Resolve<T>();
+
+        /// <summary>Resolves the specified type by its name.</summary>
+        /// <typeparam name="T">The type being returned from the container</typeparam>
+        /// <param name="name">The name of the registered type being returned from the container</param>
+        /// <returns>  An instance of the registered type resolved by its name</returns>
+        T Resolve<T>(string name);
     }
 }
