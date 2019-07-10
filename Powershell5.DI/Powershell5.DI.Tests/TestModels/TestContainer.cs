@@ -36,6 +36,13 @@
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
+        public void RegisterFactory<TInterface, TImplementation>(Func<TImplementation> factoryMethod, string name)
+            where TImplementation : class, TInterface
+        {
+            throw new NotImplementedException();
+        }
+
         public void Register(Type abstraction, Type implementation)
         {
             throw new NotImplementedException();
@@ -92,6 +99,18 @@
         }
 
         public object Resolve(Type type, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public T Resolve<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public T Resolve<T>(string name)
         {
             throw new NotImplementedException();
         }
