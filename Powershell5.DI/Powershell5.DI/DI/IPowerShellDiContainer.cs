@@ -56,6 +56,14 @@ namespace UTMO.Powershell5.DI.DI
         void RegisterFactory<TInterface, TImplementation>(Func<TInterface, TImplementation> factoryMethod)
             where TImplementation : class, TInterface;
 
+        /// <summary>Registers the factory.</summary>
+        /// <typeparam name="TInterface">  The interface being registered with container</typeparam>
+        /// <typeparam name="TImplementation">  The backing concrete type that implements the TInterface</typeparam>
+        /// <param name="factoryMethod">The factory method that generates an instance of TImplementation.</param>
+        /// <param name="name">The unique name of the TInterface TImplementation registered pair.</param>
+        void RegisterFactory<TInterface, TImplementation>(Func<TImplementation> factoryMethod, string name)
+            where TImplementation : class, TInterface;
+
         /// <summary>
         /// Registers the specified abstraction.
         /// </summary>
@@ -130,5 +138,16 @@ namespace UTMO.Powershell5.DI.DI
         /// <param name="name">The name.</param>
         /// <returns>The registered type with the specified name boxed in an <see cref="object"/>.</returns>
         object Resolve(Type type, string name);
+
+        /// <summary>Resolves the specified type</summary>
+        /// <typeparam name="T">The type being returned from the container</typeparam>
+        /// <returns>  An instance of the requested type</returns>
+        T Resolve<T>();
+
+        /// <summary>Resolves the specified type by its name.</summary>
+        /// <typeparam name="T">The type being returned from the container</typeparam>
+        /// <param name="name">The name of the registered type being returned from the container</param>
+        /// <returns>  An instance of the registered type resolved by its name</returns>
+        T Resolve<T>(string name);
     }
 }
