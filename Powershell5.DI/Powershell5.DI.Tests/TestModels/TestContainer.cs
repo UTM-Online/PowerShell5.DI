@@ -70,6 +70,11 @@
             throw new NotImplementedException();
         }
 
+        public void RegisterSingleton<T>(T item) where T : class
+        {
+          throw new NotImplementedException();
+        }
+
         public void RegisterSingleton<TInterface, TImplementation>(string name)
             where TImplementation : class, TInterface
         {
