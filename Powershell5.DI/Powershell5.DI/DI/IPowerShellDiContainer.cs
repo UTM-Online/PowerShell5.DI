@@ -100,6 +100,8 @@ namespace UTMO.Powershell5.DI.DI
         void RegisterSingleton<TInterface, TImplementation>(Func<TInterface, TImplementation> factoryMethod)
             where TImplementation : class, TInterface;
 
+        void RegisterSingleton<T>(T item) where T : class;
+
         /// <summary>
         /// Registers the singleton.
         /// </summary>
