@@ -49,6 +49,7 @@
     <Compile Include="DI\IShouldInject.cs" />
     <Compile Include="DI\PowerShellDiContainerAttribute.cs" />
     <Compile Include="Exceptions\ContainerNotFoundException.cs" />
+    <Compile Include="Exceptions\InjectablePropertyMissingSetterException.cs" />
     <Compile Include="Exceptions\TooManyContainersException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
